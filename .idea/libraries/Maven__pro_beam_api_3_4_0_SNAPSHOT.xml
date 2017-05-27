@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: pro.beam:api:3.4.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/pro/beam/api/3.4.0-SNAPSHOT/api-3.4.0-20170516.113342-5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/pro/beam/api/3.4.0-SNAPSHOT/api-3.4.0-20170516.113342-5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/pro/beam/api/3.4.0-SNAPSHOT/api-3.4.0-20170516.113342-5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
