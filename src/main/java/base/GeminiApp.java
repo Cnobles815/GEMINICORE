@@ -19,9 +19,8 @@ public class GeminiApp {
         SpringApplication.run(GeminiApp.class, args);
         Gem = new GeminiCore();
 
-        Gem.establishConnection();
-        Gem.monitorChat();
-        Gem.monitorPingCount();
+
+        Gem.activate();
 
 
     }

@@ -4,13 +4,14 @@ package base.interactionlogic;
  * Created by nosec_000 on 5/27/2017.
  */
 public class PingHandler {
-    private int pings = 0;
+    private long pings;
 
-    public void incrementPings(){
+    public long incrementPings(){
         pings += 1;
+        return pings;
     }
 
-    public int getPings() {
+    public long getPings() {
         return pings;
     }
 }
