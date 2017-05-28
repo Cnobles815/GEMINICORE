@@ -17,9 +17,9 @@ public class GeminiApp {
 
         int pings = 0;
 
-        Gem.establishConnection(pings);
-
+        Gem.establishConnection();
         Gem.monitorChat();
+        Gem.monitorPingCount();
 
 
     }
