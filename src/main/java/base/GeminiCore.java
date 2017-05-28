@@ -1,3 +1,6 @@
+package base;
+
+import base.Display;
 import pro.beam.api.BeamAPI;
 import pro.beam.api.resource.BeamUser;
 import pro.beam.api.resource.chat.BeamChat;
@@ -5,7 +8,6 @@ import pro.beam.api.resource.chat.events.IncomingMessageEvent;
 import pro.beam.api.resource.chat.events.UserJoinEvent;
 import pro.beam.api.resource.chat.methods.AuthenticateMessage;
 import pro.beam.api.resource.chat.methods.ChatSendMethod;
-import pro.beam.api.resource.chat.methods.WhisperMethod;
 import pro.beam.api.resource.chat.replies.AuthenticationReply;
 import pro.beam.api.resource.chat.replies.ReplyHandler;
 import pro.beam.api.resource.chat.ws.BeamChatConnectable;
@@ -37,7 +39,7 @@ public class GeminiCore {
         chatConnectable.connect();
         chatConnectable.send(AuthenticateMessage.from(user.channel, user, chat.authkey), new ReplyHandler<AuthenticationReply>() {
             public void onSuccess(AuthenticationReply reply) {
-                chatConnectable.send(ChatSendMethod.of("Well hello @%s " + ", I am GEMINI. No, that doesn't stand for anything. Upon my activation, I am tasked with managing this channel. Be kind. Currently in maintenance mode. Excuse all spam." +
+                chatConnectable.send(ChatSendMethod.of("Well hello." + " I am GEMINI. No, that doesn't stand for anything. Upon my activation, I am tasked with managing this channel. Be kind. Currently in maintenance mode. Excuse all spam." +
                         "\n Since my last reactivation there have been " + pingHandler.getPings() + " " + "pings that have been ponged."));
             }
             public void onFailure(Throwable var1) {
