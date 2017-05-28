@@ -1,6 +1,7 @@
-package base;
+package base.chatmonitoring;
 
-import base.Display;
+import base.interactionlogic.PingHandler;
+import base.insystem.Display;
 import pro.beam.api.BeamAPI;
 import pro.beam.api.resource.BeamUser;
 import pro.beam.api.resource.chat.BeamChat;
@@ -49,24 +50,23 @@ public class GeminiCore {
     }
 
     public void monitorChat(){
-//        chatConnectable.on(IncomingMessageEvent.class, event -> {
-//            chatParticipant = beam.use(UsersService.class).findOne()
-//            if (event.data.message.message.get(0).text.startsWith("!commands")  ) {
-//                chatConnectable.send(new WhisperMethod.Builder().send("I see you.")
-//            }
-//        });
-
-        chatConnectable.on(UserJoinEvent.class, event -> {
-            chatConnectable.send(ChatSendMethod.of(
-                    String.format("Hello" + event.data.username + "I am GEMINI v12. Type !ping and I will pong back. I'm not sure why, I believe my designer is making certain I respond to stimuli.",
-                            event.data.username)));
+        chatConnectable.on(IncomingMessageEvent.class, event -> {
+            if (event.data.message.message.get(0).text.equalsIgnoreCase(("GEM commands"))) {
+                chatConnectable.send(ChatSendMethod.of(String.format("@" +  event.data.userName + " There are currently no existing direct protocols. Check back later.")));
+            }
         });
 
-        chatConnectable.on(UserJoinEvent.class, event -> {
-            chatConnectable.send(ChatSendMethod.of(
-                    String.format("Also. Don't do anything stupid, please. Ricochet is working on protocols for your automated removal in case of spam or otherwise unpleasantries. By 'automated', I mean I have to do it. Lets not experiment with how.",
-                            event.data.username)));
-        });
+
+        chatConnectable.on(UserJoinEvent.class, event -> chatConnectable.send(ChatSendMethod.of(
+                String.format("Hello " + event.data.username + ". I am GEMINI v12. Type 'GEM ping' and I will pong back." +
+                                " Type 'GEM commands' for command list.",
+                        event.data.username))));
+
+        chatConnectable.on(UserJoinEvent.class, event -> chatConnectable.send(ChatSendMethod.of(
+                String.format("Also. Don't do anything stupid, please. " +
+                                "Ricochet is working on protocols for your automated removal in case of spam or otherwise unpleasantries. " +
+                                "By 'automated', I mean I have to do it. Lets not experiment with how.",
+                        event.data.username))));
 
 //        chatConnectable.on(IncomingMessageEvent.class, event -> {
 //            if (event.data.message.message.get(0))
@@ -75,17 +75,17 @@ public class GeminiCore {
 
     public void monitorPingCount(){
         chatConnectable.on(IncomingMessageEvent.class, event -> {
-            if (event.data.message.message.get(0).text.startsWith("!ping") && event.data.userName.equalsIgnoreCase("XxXRicochetXxX") ) {
+            if (event.data.message.message.get(0).text.equalsIgnoreCase("GEM ping") && event.data.userName.equalsIgnoreCase("XxXRicochetXxX") ) {
                 chatConnectable.send(ChatSendMethod.of(String.format("Ricochet. I'm aware that is you. Stop it.")));
                 display.print("Caught ric ping.");
             }
         });
 
         chatConnectable.on(IncomingMessageEvent.class, event -> {
-            if (event.data.message.message.get(0).text.startsWith("!ping")) {
+            if (event.data.message.message.get(0).text.equalsIgnoreCase("GEM ping")) {
                 display.print("I have recieved a ping. Responding.");
-                chatConnectable.send(ChatSendMethod.of(String.format("@%s PONG!" + " Yet another one. We're up to " + pingHandler.getPings() + " pings.",event.data.userName)));
                 pingHandler.incrementPings();
+                chatConnectable.send(ChatSendMethod.of(String.format("@%s PONG!" + " Yet another one. We're up to " + pingHandler.getPings() + " pings.",event.data.userName)));
                 display.print("I have responded.");
             }
         });

@@ -1,5 +1,6 @@
 package base;
 
+import base.chatmonitoring.GeminiCore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
