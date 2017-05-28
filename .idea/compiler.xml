@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="GEMINICORE" />
         <module name="testMixer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="GEMINICORE" target="1.8" />
       <module name="testMixer" target="1.8" />
     </bytecodeTargetLevel>
   </component>

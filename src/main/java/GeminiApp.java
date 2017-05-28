@@ -22,8 +22,5 @@ public class GeminiApp {
         Gem.monitorChat();
 
 
-
-
-
     }
 }
