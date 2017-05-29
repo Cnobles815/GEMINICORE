@@ -1,5 +1,6 @@
 package base.chatmonitoring;
 
+import base.destinyconnection.BungieAccountAccess;
 import base.interactionlogic.PingHandler;
 import base.insystem.Display;
 import pro.beam.api.BeamAPI;
@@ -15,6 +16,7 @@ import pro.beam.api.resource.chat.ws.BeamChatConnectable;
 import pro.beam.api.services.impl.ChatService;
 import pro.beam.api.services.impl.UsersService;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -26,7 +28,7 @@ public class GeminiCore {
     BeamUser user = beam.use(UsersService.class).getCurrent().get();
     BeamChat chat = beam.use(ChatService.class).findOne(user.channel.id).get();
     BeamChatConnectable chatConnectable = chat.connectable(beam);
-
+    BungieAccountAccess bungieAccount = new BungieAccountAccess();
 
 //    BeamUser chatParticipant = beam.use(UsersService.class).getCurrent().get();
 
@@ -42,6 +44,7 @@ public class GeminiCore {
         welcomeToChat();
         explainChatRules();
         monitorPingCount();
+        replyWithRicochetStats();
     }
 
     private void establishConnection(){
@@ -95,6 +98,26 @@ public class GeminiCore {
         chatConnectable.on(IncomingMessageEvent.class, event -> {
             if (event.data.message.message.get(0).text.equalsIgnoreCase(("GEM commands"))) {
                 chatConnectable.send(ChatSendMethod.of(String.format("@" + event.data.userName + " There are currently no existing direct protocols. Check back later.")));
+            }
+        });
+    }
+
+    private void replyWithRicochetStats()  {
+        chatConnectable.on(IncomingMessageEvent.class, event -> {
+            if (event.data.message.message.get(0).text.equalsIgnoreCase(("GEM stats ricochet kills"))){
+                display.print("Got stats request.");
+                try {
+                    chatConnectable.send(ChatSendMethod.of(bungieAccount.bNetAccess()));
+                    display.print("Stats served to mixer channel. You're welcome.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    display.print(bungieAccount.giveStats());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
